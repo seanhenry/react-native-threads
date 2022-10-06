@@ -59,7 +59,11 @@ RCT_REMAP_METHOD(startThread,
                                 identifier:(uint32_t)threadId
                               parentBridge:(RCTBridge *)parentBridge
 {
-  NSURL *threadURL = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:name];
+#if DEBUG
+    NSURL *threadURL = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:name];
+#else
+    NSURL *threadURL = [[NSBundle mainBundle] URLForResource:name withExtension:@"jsbundle"];
+#endif
   NSLog(@"starting Thread %@", [threadURL absoluteString]);
 
 
